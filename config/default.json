@@ -1,0 +1,3 @@
+{
+	"mongoURI": "mongodb+srv://pragyaplutos1:plutosmongo@cluster0.1afp1gn.mongodb.net/vouchers?retryWrites=true&w=majority"
+}
