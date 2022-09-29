@@ -45,13 +45,19 @@ router.get("/", async (req, res) => {
 //@description  Get voucher using id
 router.get("/:id", async (req, res) => {
 	try {
-		const voucher = await Voucher.findById(req.params.id);
+		const id = req.params.id;
+		const voucher = await Voucher.findById(id);
 
-		if (!voucher) {
+		if (voucher) {
+			res.json({
+				couponCode: voucher.couponCode,
+				isActive: voucher.isActive,
+			});
+		} else {
 			return res.status(404).json({ msg: "Voucher not found." });
 		}
 
-		res.json(voucher);
+		// res.json(voucher);
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send("Server error.");
@@ -85,7 +91,7 @@ router.patch("/:id", async (req, res) => {
 //@description  Delete voucher
 
 //only deactivating the voucher and not removing it from the database.
-router.post("/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
 	try {
 		let id = req.params.id;
 

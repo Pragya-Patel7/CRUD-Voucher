@@ -4,7 +4,8 @@
 	"description": "CRUD operations for voucher",
 	"main": "server.js",
 	"scripts": {
-		"start": "nodemon app.js"
+		"start": "nodemon app.js",
+		"test": "jest --watchAll --testTimeout=10000"
 	},
 	"author": "Pragya Patel",
 	"license": "ISC",
