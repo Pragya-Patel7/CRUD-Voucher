@@ -12,7 +12,7 @@ describe("Voucher API", () => {
 				expect(res.body).toEqual(
 					expect.arrayContaining([
 						expect.objectContaining({
-							couponCode: expect.any(String),
+							voucherName: expect.any(String),
 							isActive: expect.any(Boolean),
 						}),
 					])
@@ -29,7 +29,7 @@ describe("Voucher API", () => {
 				// console.log(res);
 				expect(res.body).toEqual(
 					expect.objectContaining({
-						couponCode: expect.any(String),
+						voucherName: expect.any(String),
 						isActive: expect.any(Boolean),
 					})
 				);
@@ -42,7 +42,7 @@ describe("Voucher API", () => {
 
 	it("POST / ---> created voucher", async () => {
 		const res = await request(app).post("/").send({
-			couponCode: "xyz",
+			voucherName: "xyz",
 			isActive: true,
 		});
 		expect(res.statusCode).toBe(200);
@@ -50,7 +50,7 @@ describe("Voucher API", () => {
 
 	it("PATCH /:id ---> updated voucher", async () => {
 		const res = await request(app).patch("/6333235b64e1f1dcbf5a732f").send({
-			couponCode: "xyzw",
+			voucherName: "xyzw",
 		});
 		expect(res.statusCode).toBe(200);
 	});

@@ -2,20 +2,17 @@ const mongoose = require("mongoose");
 
 const VoucherSchema = mongoose.Schema(
 	{
-		couponCode: {
+		voucherName: {
 			type: String,
 			required: true,
 		},
-		description: {
+		termsConditions: {
 			type: String,
 		},
-		brandName: {
+		redemptionProcess: {
 			type: String,
 		},
-		type: {
-			type: String,
-		},
-		amount: {
+		offer: {
 			type: String,
 		},
 		isActive: {
