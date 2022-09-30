@@ -1,6 +1,8 @@
 const request = require("supertest");
 const app = require("../server");
 
+const voucherId = "6335d3084be6ec952fd0aa3b";
+
 describe("Voucher API", () => {
 	it("GET /vouchers ---> array vouchers", async () => {
 		return request(app)
@@ -22,7 +24,7 @@ describe("Voucher API", () => {
 
 	it("GET /vouchers/:id ---> voucher", async () => {
 		return request(app)
-			.get("/vouchers/6335d3084be6ec952fd0aa3b")
+			.get(`/vouchers/${voucherId}`)
 			.expect("Content-Type", /json/)
 			.expect(200)
 			.then((res) => {
@@ -49,18 +51,14 @@ describe("Voucher API", () => {
 	});
 
 	it("PATCH /vouchers/:id ---> updated voucher", async () => {
-		const res = await request(app)
-			.patch("/vouchers/6335d3084be6ec952fd0aa3b")
-			.send({
-				voucherName: "xyzw",
-			});
+		const res = await request(app).patch(`/vouchers/${voucherId}`).send({
+			voucherName: "xyzw",
+		});
 		expect(res.statusCode).toBe(200);
 	});
 
 	it("DELETE /vouchers/:id ---> deleted voucher", async () => {
-		const res = await request(app)
-			.delete("/vouchers/6335d3084be6ec952fd0aa3b")
-			.send({});
+		const res = await request(app).delete(`/vouchers/${voucherId}`).send({});
 		expect(res.statusCode).toBe(200);
 	});
 });

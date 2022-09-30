@@ -24,7 +24,12 @@ exports.getCustomerById = async (req, res) => {
 
 		//sending details of user after authorisation
 		const profile = await CustomerProfile.findById(id).select("-isDeactivated");
-		res.status(200).json(profile);
+
+		if (profile) {
+			res.json(profile);
+		} else {
+			return res.status(404).json({ msg: "Profile not found." });
+		}
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send("Server error.");
@@ -45,13 +50,12 @@ exports.signUp = async (req, res) => {
 		let userExist = await Customer.findOne({ contactNum });
 		if (userExist) {
 			return res
-				.status(500)
+				.status(200)
 				.send({ msg: "Registered user. Voucher redeemed." });
 		}
 
 		//Generate otp only for new user
 		const otp = generateOTP(4);
-		console.log(otp);
 
 		let customer = new Customer({
 			contactNum,
@@ -81,7 +85,6 @@ exports.register = async (req, res) => {
 	//id of customer schema
 	const id = req.params.id;
 	let customer = await Customer.findById(id);
-	// console.log(customer.contactNum);
 
 	const { name, email } = req.body;
 	const profileFields = {
@@ -90,8 +93,6 @@ exports.register = async (req, res) => {
 		contactNum: customer.contactNum,
 		email,
 	};
-
-	console.log(profileFields);
 
 	try {
 		//Create profile

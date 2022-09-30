@@ -37,10 +37,6 @@ router.post(
 //@description  Verify the user otp
 // router.post("/verifyOtp", verifyOtp);
 
-// @route        PUT /user/vouchersRedeemed/:id
-// @description  Adding vouchers redeemed by customer in customer profile
-router.put("/vouchersRedeemed/:id", addRedeemedVouchers);
-
 // @route        POST /user/:id
 // @description  Create user profile by id
 // @access       Private route after JWT authentication
@@ -52,6 +48,10 @@ router.post(
 	],
 	register
 );
+
+// @route        PUT /user/vouchersRedeemed/:id
+// @description  Adding vouchers redeemed by customer in customer profile
+router.put("/vouchersRedeemed/:id", addRedeemedVouchers);
 
 // @route        PATCH /user/profile/:id
 // @description  Update user's profile

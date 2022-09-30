@@ -2,6 +2,9 @@ const { model, Schema } = require("mongoose");
 
 const CustomerProfileSchema = new Schema(
 	{
+		id: {
+			type: String,
+		},
 		name: {
 			type: String,
 			trim: true,
@@ -14,9 +17,7 @@ const CustomerProfileSchema = new Schema(
 		},
 		email: {
 			type: String,
-			//required: true,
 			trim: true,
-			unique: true,
 		},
 		voucherRedeemed: [
 			{

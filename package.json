@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"scripts": {
 		"start": "nodemon app.js",
-		"test": "jest --watchAll --testTimeout=10000  --maxWorkers=1"
+		"test": "jest --watchAll --testTimeout=10000  --maxWorkers=1 --detectOpenHandles"
 	},
 	"author": "Pragya Patel",
 	"license": "ISC",

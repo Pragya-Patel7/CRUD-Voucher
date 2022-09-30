@@ -1,81 +1,99 @@
 const request = require("supertest");
 const app = require("../server");
 
-//  getAllCustomers,
-// 	getCustomerById,
-// 	signUp,
-// 	verifyOtp,
-// 	register,
-// 	updateProfile,
-// 	removeProfile,
-// 	addRedeemedVouchers,
+const customerProfileId = "66336bad79d3ab1585a92576a";
+const customerId = "6336ba8b9d3ab1585a925767";
+const testCustomer = {
+	name: "testCustomer",
+	email: "testCustomer@xyz.in",
+};
 
 describe("Cutomer API", () => {
-	it("GET /user ---> array users", async () => {
-		// return request(app)
-		// 	.get("/user")
-		// 	.expect("Content-Type", /json/)
-		// 	.expect(200)
-		// 	.then((res) => {
-		// 		// console.log(res);
-		// 		expect(res.body).toEqual(
-		// 			expect.arrayContaining([
-		// 				expect.objectContaining({
-		// 					name: expect.any(String),
-		// 					contactNum: expect.any(String),
-		// 					email: expect.any(String),
-		// 					voucherRedeemed: expect.arrayContaining([
-		// 						expect.objectContaining({
-		// 							voucherName: expect.any(String),
-		// 						}),
-		// 					]),
-		// 				}),
-		// 			])
-		// 		);
-		// 	});
+	it("GET /user ---> get all users", async () => {
+		return request(app)
+			.get("/user")
+			.expect("Content-Type", /json/)
+			.expect(200)
+			.then((res) => {
+				// console.log(res);
+				expect(res.body).toEqual(
+					expect.arrayContaining([
+						expect.objectContaining({
+							name: expect.any(String),
+							contactNum: expect.any(String),
+							email: expect.any(String),
+							voucherRedeemed: expect.arrayContaining([
+								expect.objectContaining({
+									voucherName: expect.any(String),
+								}),
+							]),
+						}),
+					])
+				);
+			});
 	});
 
-	it("GET /vouchers/:id ---> voucher", async () => {
-		// return request(app)
-		// 	.get("/vouchers/6333235b64e1f1dcbf5a732f")
-		// 	.expect("Content-Type", /json/)
-		// 	.expect(200)
-		// 	.then((res) => {
-		// 		// console.log(res);
-		// 		expect(res.body).toEqual(
-		// 			expect.objectContaining({
-		// 				voucherName: expect.any(String),
-		// 				isActive: expect.any(Boolean),
-		// 			})
-		// 		);
-		// 	});
+	it("GET /user/:id ---> get user profile by ID", async () => {
+		return request(app)
+			.get(`/user/${customerProfileId}`)
+			.expect("Content-Type", "application/json; charset=utf-8")
+			.expect(200)
+			.then((res) => {
+				expect(res.body).toEqual(
+					expect.objectContaining({
+						name: expect.any(String),
+						contactNum: expect.any(String),
+						email: expect.any(String),
+						voucherRedeemed: expect.arrayContaining([
+							expect.objectContaining({
+								voucherName: expect.any(String),
+							}),
+						]),
+					})
+				);
+			});
 	});
 
-	// it("GET /:id ---> 404 if not found", async () => {
-	// 	return request(app).get("/9999999").expect(404);
+	// it("POST /user/signUp ---> signing up user", async () => {
+	// 	const res = await request(app).post(`/user/signUp`).send({
+	// 		contactNum: "1234657880",
+	// 	});
+	// 	// console.log(res);
+	// 	expect(res.statusCode).toBe(200);
 	// });
 
-	it("POST /vouchers ---> created voucher", async () => {
-		// const res = await request(app).post("/vouchers").send({
-		// 	voucherName: "xyz",
-		// 	isActive: true,
-		// });
-		// expect(res.statusCode).toBe(200);
+	it("POST /user/:id ---> registering user", async () => {
+		const res = await request(app)
+			.post(`/user/${customerId}`)
+			.send(testCustomer);
+		// console.log(res);
+		expect(res.statusCode).toBe(200);
 	});
 
-	it("PATCH /vouchers/:id ---> updated voucher", async () => {
-		// const res = await request(app)
-		// 	.patch("/vouchers/6333235b64e1f1dcbf5a732f")
-		// 	.send({
-		// 		voucherName: "xyzw",
-		// 	});
-		// expect(res.statusCode).toBe(200);
+	it("PUT /user/vouchersRedeemed/:id ---> adding redeemed voucher", async () => {
+		const res = await request(app)
+			.put(`/user/vouchersRedeemed/${customerProfileId}`)
+			.send({
+				voucherRedeemed: "AJIO",
+			});
+		// console.log(res);
+		expect(res.statusCode).toBe(200);
 	});
 
-	it("POST /vouchers/:id ---> deleted voucher", async () => {
-		// const res = await request(app)
-		// 	.delete("/vouchers/6333235b64e1f1dcbf5a732f")
-		// 	.send({});
-		// expect(res.statusCode).toBe(200);
+	it("PATCH /user/update/:id ---> update profile", async () => {
+		const res = await request(app)
+			.patch(`/user/update/${customerProfileId}`)
+			.send({
+				name: "customer1",
+			});
+		// console.log(res);
+		expect(res.statusCode).toBe(200);
+	});
+
+	it("DELETE /user/delete/:id ---> deactivate profile", async () => {
+		const res = await request(app)
+			.delete(`/user/delete/${customerProfileId}`)
+			.send({});
+		expect(res.statusCode).toBe(200);
 	});
 });
