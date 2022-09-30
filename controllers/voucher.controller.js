@@ -41,7 +41,7 @@ exports.getVoucherById = async (req, res) => {
 
 		if (voucher) {
 			res.json({
-				voucherName: voucher.name,
+				voucherName: voucher.voucherName,
 				isActive: voucher.isActive,
 			});
 		} else {

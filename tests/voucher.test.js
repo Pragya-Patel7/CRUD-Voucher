@@ -2,9 +2,9 @@ const request = require("supertest");
 const app = require("../server");
 
 describe("Voucher API", () => {
-	it("GET / ---> array vouchers", async () => {
+	it("GET /vouchers ---> array vouchers", async () => {
 		return request(app)
-			.get("/")
+			.get("/vouchers")
 			.expect("Content-Type", /json/)
 			.expect(200)
 			.then((res) => {
@@ -20,9 +20,9 @@ describe("Voucher API", () => {
 			});
 	});
 
-	it("GET /:id ---> voucher", async () => {
+	it("GET /vouchers/:id ---> voucher", async () => {
 		return request(app)
-			.get("/6333235b64e1f1dcbf5a732f")
+			.get("/vouchers/6335d3084be6ec952fd0aa3b")
 			.expect("Content-Type", /json/)
 			.expect(200)
 			.then((res) => {
@@ -40,23 +40,27 @@ describe("Voucher API", () => {
 	// 	return request(app).get("/9999999").expect(404);
 	// });
 
-	it("POST / ---> created voucher", async () => {
-		const res = await request(app).post("/").send({
+	it("POST /vouchers ---> created voucher", async () => {
+		const res = await request(app).post("/vouchers").send({
 			voucherName: "xyz",
 			isActive: true,
 		});
 		expect(res.statusCode).toBe(200);
 	});
 
-	it("PATCH /:id ---> updated voucher", async () => {
-		const res = await request(app).patch("/6333235b64e1f1dcbf5a732f").send({
-			voucherName: "xyzw",
-		});
+	it("PATCH /vouchers/:id ---> updated voucher", async () => {
+		const res = await request(app)
+			.patch("/vouchers/6335d3084be6ec952fd0aa3b")
+			.send({
+				voucherName: "xyzw",
+			});
 		expect(res.statusCode).toBe(200);
 	});
 
-	it("POST /:id ---> deleted voucher", async () => {
-		const res = await request(app).delete("/6333235b64e1f1dcbf5a732f").send({});
+	it("DELETE /vouchers/:id ---> deleted voucher", async () => {
+		const res = await request(app)
+			.delete("/vouchers/6335d3084be6ec952fd0aa3b")
+			.send({});
 		expect(res.statusCode).toBe(200);
 	});
 });
